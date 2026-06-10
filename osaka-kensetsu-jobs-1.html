@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>大阪 建設求人</title>
+<style>
+:root{
+  --bg:#f5f0e8;--bg2:#ede6d8;--bg3:#e0d8c8;--card:#ffffff;
+  --border:#d8cfc0;--text:#2a1a08;--text2:#6a5a40;--text3:#9a8a70;
+  --accent:#d45a10;--accent2:#2a8a50;--blue:#1a5a9a;--red:#c03020;
+  --hire:#d45a10;--seek:#2a8a50;
+  --grad-hire:linear-gradient(135deg,#d45a10,#f07030);
+  --grad-seek:linear-gradient(135deg,#1a6a3a,#2aaa60);
+  --shadow:0 2px 10px rgba(0,0,0,.10);--shadow2:0 4px 20px rgba(0,0,0,.15);
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Hiragino Sans','Noto Sans JP',sans-serif;font-size:14px;min-height:100dvh;}
+
+/* ── Header ── */
+#app-header{
+  background:#fff;
+  border-bottom:3px solid var(--accent);
+  box-shadow:var(--shadow);
+  padding:12px 15px 0;
+  position:sticky;top:0;z-index:200;
+}
+.header-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.header-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:background .3s;}
+.header-title{font-size:19px;font-weight:900;color:var(--text);letter-spacing:.5px;}
+.header-sub{font-size:10px;color:var(--text3);margin-top:1px;}
+.header-fav-btn{margin-left:auto;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:11px;color:var(--text2);cursor:pointer;font-family:inherit;white-space:nowrap;}
+.header-fav-btn.active{background:#fff0e8;border-color:var(--accent);color:var(--accent);}
+
+/* ── Mode Toggle ── */
+.mode-tabs{display:flex;gap:0;}
+.mode-tab{flex:1;padding:9px 0;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--text3);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;}
+.mode-tab.active-hire{border-bottom-color:var(--hire);color:var(--hire);}
+.mode-tab.active-seek{border-bottom-color:var(--seek);color:var(--seek);}
+.mode-tab-sub{display:block;font-size:10px;font-weight:400;opacity:.7;}
+
+/* ── Main ── */
+#app-main{max-width:640px;margin:0 auto;padding:14px 13px 70px;}
+
+/* ── Section Label ── */
+.sec-label{font-size:10px;font-weight:700;color:var(--text3);margin-bottom:5px;letter-spacing:.5px;}
+
+/* ── Scroll Row ── */
+.scroll-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;}
+.scroll-row::-webkit-scrollbar{height:3px;}
+.scroll-row::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* ── Chips ── */
+.chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--card);color:var(--text2);border:1.5px solid var(--border);transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.chip:active{transform:scale(.96);}
+.chip.active-hire{background:var(--grad-hire);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(212,90,16,.3);}
+.chip.active-seek{background:var(--grad-seek);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(42,138,80,.3);}
+
+/* ── Filter Bar ── */
+.filter-bar{display:flex;gap:5px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px;align-items:center;}
+.filter-bar::-webkit-scrollbar{display:none;}
+.filter-label{font-size:10px;color:var(--text3);white-space:nowrap;font-weight:700;flex-shrink:0;}
+.filter-chip{padding:4px 10px;border-radius:15px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer;flex-shrink:0;font-family:inherit;background:var(--bg2);color:var(--text2);border:1.5px solid var(--border);transition:all .15s;}
+.filter-chip.on-hire{background:#fff3ee;color:var(--hire);border-color:var(--hire);}
+.filter-chip.on-seek{background:#eefff5;color:var(--seek);border-color:var(--seek);}
+
+/* ── Site Banners ── */
+.site-banners{display:flex;gap:8px;margin-bottom:14px;}
+.site-banner{flex:1;display:block;border-radius:var(--radius);padding:11px 13px;text-decoration:none;border:1.5px solid rgba(255,255,255,.2);transition:transform .15s,box-shadow .15s;}
+.site-banner:active{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.banner-name{color:#fff;font-size:13px;font-weight:900;}
+.banner-sub{color:rgba(255,255,255,.65);font-size:9px;margin-top:1px;}
+.banner-foot{display:flex;align-items:center;justify-content:space-between;margin-top:7px;}
+.banner-badge{background:rgba(255,255,255,.2);font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;color:#fff;}
+.banner-arrow{color:rgba(255,255,255,.5);font-size:11px;}
+
+/* ── Func Tabs ── */
+.func-tabs{display:flex;background:var(--bg2);border-radius:var(--radius);padding:3px;border:1.5px solid var(--border);margin-bottom:14px;}
+.func-tab{flex:1;padding:7px 4px;border-radius:8px;border:none;cursor:pointer;background:transparent;color:var(--text3);font-size:11px;font-weight:700;font-family:inherit;transition:all .2s;}
+.func-tab.active-hire{background:var(--grad-hire);color:#fff;box-shadow:0 2px 8px rgba(212,90,16,.25);}
+.func-tab.active-seek{background:var(--grad-seek);color:#fff;box-shadow:0 2px 8px rgba(42,138,80,.25);}
+
+/* ── Status bar ── */
+.status-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.status-note{font-size:10px;color:var(--text3);}
+.status-right{display:flex;gap:6px;align-items:center;}
+.status-time{font-size:10px;color:var(--text3);}
+.icon-btn{background:var(--card);border:1.5px solid var(--border);padding:5px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-weight:700;font-family:inherit;color:var(--text2);transition:all .15s;}
+.icon-btn:active{background:var(--bg2);}
+.icon-btn.hire{color:var(--hire);border-color:var(--hire);background:#fff8f5;}
+.icon-btn.seek{color:var(--seek);border-color:var(--seek);background:#f0fff5;}
+
+/* ── Loading ── */
+#loading-area{display:none;text-align:center;padding:50px 20px;}
+.spinner-wrap{position:relative;width:52px;height:52px;margin:0 auto 16px;}
+.spinner{width:52px;height:52px;border:3px solid var(--border);border-radius:50%;position:absolute;animation:spin .8s linear infinite;}
+.spinner-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.loading-msg{font-size:13px;font-weight:700;color:var(--text);margin:0 0 5px;animation:blink 1.5s ease infinite;}
+.loading-sub{font-size:11px;color:var(--text3);margin:0;}
+.loading-sites{display:flex;justify-content:center;gap:5px;margin-top:14px;flex-wrap:wrap;}
+.loading-site-tag{font-size:10px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:2px 8px;color:var(--text3);animation:fadeIn .5s ease both;}
+.dots{display:flex;justify-content:center;gap:5px;margin-top:12px;}
+.dot{width:6px;height:6px;border-radius:50%;animation:blink 1.2s ease infinite;}
+
+/* ── Job Cards ── */
+.job-count-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.job-count{font-size:13px;padding:3px 13px;border-radius:20px;font-weight:900;}
+.job-count-sep{width:1px;height:13px;background:var(--border);}
+.job-count-label{font-size:11px;color:var(--text3);}
+
+.job-card{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--radius);padding:14px 14px 11px;margin-bottom:10px;
+  box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;
+  animation:fadeIn .35s ease both;
+}
+.job-card:active{transform:translateY(-1px);box-shadow:var(--shadow2);}
+.job-card-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin-bottom:2px;}
+.job-title{color:var(--text);font-size:13px;font-weight:700;line-height:1.4;flex:1;}
+.job-badge{font-size:9px;padding:3px 7px;border-radius:20px;white-space:nowrap;font-weight:700;flex-shrink:0;}
+.job-detail{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.6;}
+.job-detail b{color:var(--text);font-weight:700;}
+
+/* Job tag badges */
+.job-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px;}
+.job-tag{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;}
+.tag-daily{background:#fff0e0;color:#c05010;border:1px solid #f0c090;}
+.tag-inexperienced{background:#e0fff0;color:#1a7a40;border:1px solid #90d0a0;}
+.tag-weekly{background:#e0f0ff;color:#1a50a0;border:1px solid #90b8e0;}
+.tag-car{background:#f0e8ff;color:#6030a0;border:1px solid #c0a0e0;}
+
+/* Job action buttons */
+.job-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.job-act-btn{display:flex;align-items:center;gap:4px;padding:6px 11px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--text2);transition:all .15s;text-decoration:none;flex:1;justify-content:center;min-width:0;}
+.job-act-btn:active{background:var(--bg2);}
+.job-act-btn.fav{flex:0 0 auto;}
+.job-act-btn.faved{background:#fff0e8;border-color:var(--accent);color:var(--accent);}
+.job-act-btn.call{background:#e8f5e0;border-color:#5a9a30;color:#3a7a10;}
+.job-act-btn.map{background:#e8f0ff;border-color:#4070c0;color:#2050a0;}
+.job-act-btn.share{background:#f5f0ff;border-color:#7050c0;color:#5030a0;}
+.job-act-btn.detail{color:var(--accent);border-color:var(--accent);background:#fff8f5;}
+
+/* ── Fav Panel ── */
+#fav-pane{display:none;}
+.fav-empty{text-align:center;padding:40px 20px;color:var(--text3);}
+.fav-empty-icon{font-size:40px;display:block;margin-bottom:10px;}
+
+/* ── Error ── */
+.error-box{background:#fff5f5;border:1.5px solid #f0b0a0;border-radius:var(--radius);padding:18px;text-align:center;box-shadow:var(--shadow);}
+.error-title{color:var(--red);font-size:13px;font-weight:700;margin-bottom:7px;}
+.error-msg{color:#a05040;font-size:11px;}
+.retry-btn{margin-top:12px;background:var(--grad-hire);color:#fff;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;font-family:inherit;}
+
+/* ── Salary ── */
+.salary-panel{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:13px;box-shadow:var(--shadow);}
+.salary-title{font-size:13px;font-weight:700;margin:0 0 14px;color:var(--text);}
+.salary-row{margin-bottom:11px;transition:opacity .3s;}
+.salary-row.dim{opacity:.2;}
+.salary-label-row{display:flex;justify-content:space-between;margin-bottom:4px;}
+.salary-cat{font-size:12px;font-weight:700;width:95px;}
+.salary-range{font-size:10px;color:var(--text2);}
+.salary-bar-bg{position:relative;height:12px;background:var(--bg2);border-radius:6px;overflow:hidden;}
+.salary-bar-range{position:absolute;height:100%;}
+.salary-bar-avg{position:absolute;width:3px;height:100%;border-radius:2px;}
+.salary-axis{display:flex;justify-content:space-between;margin-top:6px;}
+.salary-axis span{font-size:9px;color:var(--text3);}
+
+/* ── Skill Panel ── */
+.skill-panel{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:15px;margin-bottom:13px;box-shadow:var(--shadow);}
+.skill-title{font-size:13px;font-weight:700;margin:0 0 12px;color:var(--text);}
+.skill-section{margin-bottom:11px;}
+.skill-label{font-size:11px;color:var(--text2);font-weight:700;display:block;margin-bottom:5px;}
+.tag-row{display:flex;gap:5px;flex-wrap:wrap;}
+.tag-btn{padding:5px 11px;border-radius:15px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;background:var(--bg2);color:var(--text2);border:1.5px solid var(--border);transition:all .15s;}
+.tag-btn.sel-hire{background:#fff3ee;color:var(--hire);border-color:var(--hire);}
+.tag-btn.sel-seek{background:#eefff5;color:var(--seek);border-color:var(--seek);}
+.cert-btn{padding:4px 9px;border-radius:12px;font-size:10px;cursor:pointer;font-family:inherit;font-weight:600;background:var(--bg2);color:var(--text2);border:1.5px solid var(--border);transition:all .15s;}
+.cert-btn.sel-hire{background:#fff3ee;color:var(--hire);border-color:var(--hire);}
+.cert-btn.sel-seek{background:#eefff5;color:var(--seek);border-color:var(--seek);}
+.skill-input{width:100%;background:var(--bg2);border:1.5px solid var(--border);color:var(--text);border-radius:8px;padding:8px 11px;font-size:12px;font-family:inherit;outline:none;transition:border-color .2s;}
+.skill-input:focus{border-color:var(--accent);background:#fff;}
+.skill-search-btn{width:100%;padding:11px 0;border-radius:9px;border:none;cursor:pointer;color:#fff;font-size:14px;font-weight:700;font-family:inherit;margin-top:11px;letter-spacing:.5px;}
+
+/* ── Footer ── */
+.footer{margin-top:24px;padding:14px;border-top:1px solid var(--border);text-align:center;color:var(--text3);font-size:10px;line-height:1.8;}
+
+/* ── Toast ── */
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#2a1a08;color:#fff;padding:9px 20px;border-radius:20px;font-size:12px;font-weight:700;opacity:0;transition:all .3s;z-index:1000;pointer-events:none;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── Animations ── */
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+input::placeholder{color:var(--text3);}
+a{color:inherit;}
+</style>
+</head>
+<body>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+const cfg = {
+  apiKey:"AIzaSyCVk2miG5TK1ffTofXLh0hHgeSbOvmIgZ8",
+  authDomain:"kensetsu-nippo-842a2.firebaseapp.com",
+  projectId:"kensetsu-nippo-842a2",
+  storageBucket:"kensetsu-nippo-842a2.firebasestorage.app",
+  messagingSenderId:"702880974315",
+  appId:"1:702880974315:web:985321dc9180046629c5ae"
+};
+initializeApp(cfg);
+window.dispatchEvent(new Event('fbReady'));
+</script>
+
+<!-- ===== HEADER ===== -->
+<div id="app-header">
+  <div style="max-width:640px;margin:0 auto;">
+    <div class="header-top">
+      <div class="header-icon" id="hdr-icon">🏗️</div>
+      <div>
+        <div class="header-title">OSAKA 建設求人</div>
+        <div class="header-sub" id="hdr-sub">Gemini 2.5 Flash + 6サイト同時検索</div>
+      </div>
+      <button class="header-fav-btn" id="fav-toggle-btn" onclick="toggleFavPane()">☆ お気に入り (<span id="fav-count">0</span>)</button>
+    </div>
+    <div class="mode-tabs">
+      <button class="mode-tab active-hire" id="tab-hire" onclick="setMode('hiring')">
+        🏢 求人を探す<span class="mode-tab-sub">企業・工務店</span>
+      </button>
+      <button class="mode-tab" id="tab-seek" onclick="setMode('seeking')">
+        👷 仕事を探す<span class="mode-tab-sub">職人・一人親方</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN ===== -->
+<div id="app-main">
+
+  <!-- 地域 -->
+  <div class="sec-label">📍 地域</div>
+  <div class="scroll-row" id="area-row"></div>
+
+  <!-- 職種 -->
+  <div class="sec-label">🔧 職種</div>
+  <div class="scroll-row" id="cat-row"></div>
+
+  <!-- フィルター -->
+  <div class="filter-bar">
+    <span class="filter-label">絞込：</span>
+    <span class="filter-chip" id="fc-daily"   onclick="toggleFilter('daily')">💴 日払い</span>
+    <span class="filter-chip" id="fc-weekly"  onclick="toggleFilter('weekly')">📅 週払い</span>
+    <span class="filter-chip" id="fc-newbie"  onclick="toggleFilter('newbie')">🌱 未経験OK</span>
+    <span class="filter-chip" id="fc-car"     onclick="toggleFilter('car')">🚗 車通勤OK</span>
+    <span class="filter-chip" id="fc-urgent"  onclick="toggleFilter('urgent')">⚡ 急募</span>
+  </div>
+
+  <!-- 専門サイト直リンク -->
+  <div class="sec-label">🔗 専門サイトで直接検索</div>
+  <div class="site-banners" id="site-banners-1"></div>
+  <div class="site-banners" id="site-banners-2" style="margin-bottom:14px;"></div>
+
+  <!-- 機能タブ -->
+  <div class="func-tabs">
+    <button class="func-tab active-hire" id="ftab-jobs"   onclick="setFuncTab('jobs')">🔍 求人一覧</button>
+    <button class="func-tab"             id="ftab-salary" onclick="setFuncTab('salary')">📊 給与相場</button>
+    <button class="func-tab"             id="ftab-skill"  onclick="setFuncTab('skill')">📝 スキル検索</button>
+  </div>
+
+  <!-- お気に入りパネル -->
+  <div id="fav-pane">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span style="font-weight:700;font-size:14px;">⭐ お気に入り</span>
+      <button class="icon-btn" onclick="clearAllFav()">🗑 全削除</button>
+    </div>
+    <div id="fav-list"></div>
+  </div>
+
+  <!-- 求人一覧 -->
+  <div id="pane-jobs">
+    <div class="status-bar">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+        <span class="status-note" id="search-note"></span>
+        <span id="skill-badge" style="display:none;font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;"></span>
+      </div>
+      <div class="status-right">
+        <span class="status-time" id="update-time"></span>
+        <button class="icon-btn" id="reset-btn" style="display:none;" onclick="resetSkill()">✕</button>
+        <button class="icon-btn hire" id="refresh-btn" onclick="doSearch()">🔄 更新</button>
+      </div>
+    </div>
+
+    <div id="loading-area">
+      <div class="spinner-wrap">
+        <div class="spinner" id="spinner"></div>
+        <div class="spinner-emoji" id="spin-emoji">🏢</div>
+      </div>
+      <p class="loading-msg" id="loading-msg">検索中…</p>
+      <p class="loading-sub">6サイト横断・Gemini 2.5 Flash検索</p>
+      <div class="loading-sites" id="loading-sites"></div>
+      <div class="dots" id="dots">
+        <div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <div id="error-area" style="display:none;">
+      <div class="error-box">
+        <p class="error-title">⚠️ 取得エラー</p>
+        <p class="error-msg" id="error-msg"></p>
+        <button class="retry-btn" onclick="doSearch()">再試行</button>
+      </div>
+    </div>
+
+    <div id="results-area" style="display:none;">
+      <div class="job-count-row">
+        <span class="job-count" id="job-count"></span>
+        <div class="job-count-sep"></div>
+        <span class="job-count-label" id="job-count-label"></span>
+      </div>
+      <div id="job-list"></div>
+    </div>
+
+    <div id="raw-area" style="display:none;">
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:15px;">
+        <p style="font-size:12px;color:var(--text2);white-space:pre-wrap;line-height:1.7;" id="raw-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 給与相場 -->
+  <div id="pane-salary" style="display:none;">
+    <div class="salary-panel">
+      <p class="salary-title">📊 職種別 大阪相場（日給目安）</p>
+      <div id="salary-rows"></div>
+      <div class="salary-axis">
+        <span>¥0</span><span>¥1万</span><span>¥2万</span><span>¥3万</span><span>¥4万</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- スキル検索 -->
+  <div id="pane-skill" style="display:none;">
+    <div class="skill-panel">
+      <p class="skill-title" id="skill-panel-title">📝 スキルに合う求人を探す</p>
+      <div class="skill-section">
+        <span class="skill-label">経験年数</span>
+        <div class="tag-row" id="exp-row"></div>
+      </div>
+      <div class="skill-section">
+        <span class="skill-label">保有資格（複数可）</span>
+        <div class="tag-row" id="cert-row"></div>
+      </div>
+      <div class="skill-section">
+        <span class="skill-label">希望条件（自由入力）</span>
+        <input class="skill-input" id="pref-input" placeholder="例: 日払い希望、週3日〜、車通勤OK...">
+      </div>
+      <button class="skill-search-btn" id="skill-srch-btn" onclick="skillSearch()">🔍 スキルで検索する</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    Gemini 2.5 Flash × Google検索 × URLクロールでリアルタイム取得<br>
+    プラスワーク・助太刀・建設ジョブ・工事士.com・Indeed・求人ボックス<br>
+    給与相場は目安。応募前に必ず各サイトで最新情報をご確認ください。
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+// ============================================================
+//  Firebase Functions エンドポイント
+// ============================================================
+var FB_BASE = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
+  ? 'http://localhost:5001/kensetsu-nippo-842a2/us-central1'
+  : 'https://us-central1-kensetsu-nippo-842a2.cloudfunctions.net';
+
+// ============================================================
+//  定数データ
+// ============================================================
+var AREAS = [
+  {id:'all',      label:'大阪府全域', ps:''},
+  {id:'osaka',    label:'大阪市',     ps:'大阪市'},
+  {id:'sakai',    label:'堺市',       ps:'堺市'},
+  {id:'higashi',  label:'東大阪市',   ps:'東大阪市'},
+  {id:'toyonaka', label:'豊中市',     ps:'豊中市'},
+  {id:'hirakata', label:'枚方市',     ps:'枚方市'},
+  {id:'suita',    label:'吹田市',     ps:'吹田市'},
+  {id:'takatsuki',label:'高槻市',     ps:'高槻市'},
+  {id:'yao',      label:'八尾市',     ps:'八尾市'},
+  {id:'kishiwada',label:'岸和田市',   ps:'岸和田市'},
+];
+
+var CATS = [
+  {
+    id:'all',label:'すべて',icon:'📋',
+    tags:['大工','サイディング','上棟','建て方','クロス'],
+    sal:{min:16000,avg:22000,max:35000},
+    plusUrl:'https://plus-work.net/',
+    sukeHire:'https://shain.suke-dachi.jp/search/osaka',
+    sukeSeek:'https://web.suke-dachi.jp/search/builders/osaka',
+    kensetsuUrl:'https://kensetsu-job.com/jobsearch/?pref=27',
+    kojishiUrl:'https://kojishi.com/search/?pref=27',
+    hQ:['大阪 大工 求人 急募 2026','大阪 サイディング 外壁職人 求人 即戦力','大阪 上棟大工 建て方鳶 求人 日払い','大阪 クロス職人 内装 求人 未経験'],
+    sQ:['大阪 大工 職人 仕事 日払い 即日','大阪 サイディング 一人親方 案件 急募','大阪 建て方 上棟鳶 仕事 週払い','大阪 クロス職人 内装 案件 未経験'],
+    hUrls:['https://plus-work.net/','https://shain.suke-dachi.jp/search/osaka','https://kensetsu-job.com/jobsearch/?pref=27'],
+    sUrls:['https://plus-work.net/','https://web.suke-dachi.jp/search/builders/osaka','https://kojishi.com/search/?pref=27'],
+  },
+  {
+    id:'daiku',label:'大工',icon:'🔨',
+    tags:['大工','木工','在来工法','2×4','枠組壁工法'],
+    sal:{min:15000,avg:21000,max:32000},
+    plusUrl:'https://plus-work.net/?job_category%5B%5D=%E5%A4%A7%E5%B7%A5%E5%B7%A5%E4%BA%8B',
+    sukeHire:'https://shain.suke-dachi.jp/search/osaka/o_interior_2006',
+    sukeSeek:'https://web.suke-dachi.jp/search/builders/osaka/o_interior_2006',
+    kensetsuUrl:'https://kensetsu-job.com/jobsearch/?pref=27&job=%E5%A4%A7%E5%B7%A5',
+    kojishiUrl:'https://kojishi.com/search/?pref=27&keyword=%E5%A4%A7%E5%B7%A5',
+    hQ:['大阪 大工 求人 正社員 急募','大阪 大工 求人 日払い 未経験OK','大阪 木造大工 在来工法 工務店 求人','大阪府 大工職人 求人 即採用'],
+    sQ:['大阪 大工 仕事 一人親方 日払い','大阪 大工 案件 未経験 募集','大阪 木造 大工 下請け 急募','大阪 大工 週払い フリー 現場'],
+    hUrls:['https://plus-work.net/?job_category%5B%5D=%E5%A4%A7%E5%B7%A5%E5%B7%A5%E4%BA%8B','https://shain.suke-dachi.jp/search/osaka/o_interior_2006','https://kensetsu-job.com/jobsearch/?pref=27&job=%E5%A4%A7%E5%B7%A5'],
+    sUrls:['https://plus-work.net/?job_category%5B%5D=%E5%A4%A7%E5%B7%A5%E5%B7%A5%E4%BA%8B','https://web.suke-dachi.jp/search/builders/osaka/o_interior_2006','https://kojishi.com/search/?pref=27&keyword=%E5%A4%A7%E5%B7%A5'],
+  },
+  {
+    id:'siding',label:'サイディング',icon:'🏠',
+    tags:['サイディング','外壁','窯業系','金属サイディング','ALC'],
+    sal:{min:16000,avg:23000,max:36000},
+    plusUrl:'https://plus-work.net/?job_category%5B%5D=%E5%A4%96%E5%A3%81%E5%B7%A5%E4%BA%8B',
+    sukeHire:'https://shain.suke-dachi.jp/search/osaka/o_exterior_2046',
+    sukeSeek:'https://web.suke-dachi.jp/search/builders/osaka/o_exterior_2046',
+    kensetsuUrl:'https://kensetsu-job.com/jobsearch/?pref=27&job=%E3%82%B5%E3%82%A4%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0',
+    kojishiUrl:'https://kojishi.com/search/?pref=27&keyword=%E3%82%B5%E3%82%A4%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0',
+    hQ:['大阪 サイディング 外壁 職人 求人 急募','大阪 外壁工事 サイディング 求人 日払い','大阪 金属サイディング ALC 外壁 求人','大阪 外装 サイディング 職人 即戦力 募集'],
+    sQ:['大阪 サイディング 一人親方 仕事 日払い','大阪 外壁 サイディング 案件 急募','大阪 外壁工事 下請け サイディング 即日','大阪 外装職人 サイディング 週払い'],
+    hUrls:['https://plus-work.net/?job_category%5B%5D=%E5%A4%96%E5%A3%81%E5%B7%A5%E4%BA%8B','https://shain.suke-dachi.jp/search/osaka/o_exterior_2046','https://kensetsu-job.com/jobsearch/?pref=27&job=%E3%82%B5%E3%82%A4%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0'],
+    sUrls:['https://plus-work.net/?job_category%5B%5D=%E5%A4%96%E5%A3%81%E5%B7%A5%E4%BA%8B','https://web.suke-dachi.jp/search/builders/osaka/o_exterior_2046','https://kojishi.com/search/?pref=27&keyword=%E3%82%B5%E3%82%A4%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0'],
+  },
+  {
+    id:'joto',label:'上棟・建て方',icon:'🏗️',
+    tags:['上棟大工','建て方大工','建て方職人','上棟トビ','建て方鳶','鉄骨鳶'],
+    sal:{min:18000,avg:26000,max:40000},
+    plusUrl:'https://plus-work.net/?job_category%5B%5D=%E5%BB%BA%E3%81%A6%E6%96%B9%E5%A4%A7%E5%B7%A5',
+    sukeHire:'https://shain.suke-dachi.jp/search/osaka/o_structure_2016',
+    sukeSeek:'https://web.suke-dachi.jp/search/builders/osaka/o_structure_2016',
+    kensetsuUrl:'https://kensetsu-job.com/jobsearch/?pref=27&job=%E4%B8%8A%E6%A3%9F',
+    kojishiUrl:'https://kojishi.com/search/?pref=27&keyword=%E5%BB%BA%E3%81%A6%E6%96%B9',
+    hQ:['大阪 上棟大工 建て方大工 求人 急募','大阪 鉄骨鳶 建て方鳶 上棟鳶 求人 日払い','大阪 建方工事 上棟工 求人 即採用','大阪 木造上棟 建て方職人 求人 工務店'],
+    sQ:['大阪 上棟大工 建て方 一人親方 仕事 日払い','大阪 鉄骨鳶 建て方鳶 仕事 急募','大阪 建方工事 上棟 職人 週払い','大阪 木造 建て方 上棟 下請け 即日'],
+    hUrls:['https://plus-work.net/?job_category%5B%5D=%E5%BB%BA%E3%81%A6%E6%96%B9%E5%A4%A7%E5%B7%A5','https://shain.suke-dachi.jp/search/osaka/o_structure_2016','https://kensetsu-job.com/jobsearch/?pref=27&job=%E4%B8%8A%E6%A3%9F'],
+    sUrls:['https://plus-work.net/?job_category%5B%5D=%E5%BB%BA%E3%81%A6%E6%96%B9%E5%A4%A7%E5%B7%A5','https://web.suke-dachi.jp/search/builders/osaka/o_structure_2016','https://kojishi.com/search/?pref=27&keyword=%E5%BB%BA%E3%81%A6%E6%96%B9'],
+  },
+  {
+    id:'cross',label:'クロス',icon:'🖼️',
+    tags:['クロス','内装','壁紙','クロス貼り','内装仕上げ'],
+    sal:{min:14000,avg:19000,max:30000},
+    plusUrl:'https://plus-work.net/?job_category%5B%5D=%E3%82%AF%E3%83%AD%E3%82%B9%E5%B7%A5%E4%BA%8B',
+    sukeHire:'https://shain.suke-dachi.jp/search/osaka/o_interior_2031',
+    sukeSeek:'https://web.suke-dachi.jp/search/builders/osaka/o_interior_2031',
+    kensetsuUrl:'https://kensetsu-job.com/jobsearch/?pref=27&job=%E3%82%AF%E3%83%AD%E3%82%B9',
+    kojishiUrl:'https://kojishi.com/search/?pref=27&keyword=%E3%82%AF%E3%83%AD%E3%82%B9',
+    hQ:['大阪 クロス職人 内装 求人 急募','大阪 壁紙 クロス貼り 内装仕上げ 求人 日払い','大阪 内装工事 クロス 職人 求人 未経験OK','大阪 クロス 内装 即採用 アルバイト'],
+    sQ:['大阪 クロス職人 一人親方 仕事 日払い','大阪 クロス 壁紙 内装 職人 急募','大阪 内装 クロス 下請け 週払い','大阪 クロス職人 フリー 案件 未経験'],
+    hUrls:['https://plus-work.net/?job_category%5B%5D=%E3%82%AF%E3%83%AD%E3%82%B9%E5%B7%A5%E4%BA%8B','https://shain.suke-dachi.jp/search/osaka/o_interior_2031','https://kensetsu-job.com/jobsearch/?pref=27&job=%E3%82%AF%E3%83%AD%E3%82%B9'],
+    sUrls:['https://plus-work.net/?job_category%5B%5D=%E3%82%AF%E3%83%AD%E3%82%B9%E5%B7%A5%E4%BA%8B','https://web.suke-dachi.jp/search/builders/osaka/o_interior_2031','https://kojishi.com/search/?pref=27&keyword=%E3%82%AF%E3%83%AD%E3%82%B9'],
+  },
+];
+
+var SAL_ALL=[
+  {label:'クロス',     min:14000,avg:19000,max:30000,color:'#9B59B6'},
+  {label:'大工',       min:15000,avg:21000,max:32000,color:'#d45a10'},
+  {label:'サイディング',min:16000,avg:23000,max:36000,color:'#1a5a9a'},
+  {label:'上棟・建て方',min:18000,avg:26000,max:40000,color:'#2a8a50'},
+];
+
+// 6サイト定義
+var SITE_LIST = [
+  {name:'プラスワーク', sub:'関西建築・建設専門',    logo:'＋', bg:'linear-gradient(135deg,#e65c00,#f9a020)', tc:'#fff', getUrl:function(c,sk){return sk?c.plusUrl:c.plusUrl;}},
+  {name:'助太刀',       sub:'職人マッチング',         logo:'⚔',  bg:'linear-gradient(135deg,#1a1a2e,#0f3460)', tc:'#e94560', getUrl:function(c,sk){return sk?c.sukeSeek:c.sukeHire;}},
+  {name:'建設ジョブ',   sub:'建設業専門転職',         logo:'🏢',  bg:'linear-gradient(135deg,#1a5080,#2a80c0)', tc:'#7adeff', getUrl:function(c,sk){return c.kensetsuUrl;}},
+  {name:'工事士.com',   sub:'電気・建設職人',         logo:'⚡',  bg:'linear-gradient(135deg,#2a6000,#509020)', tc:'#c8ff70', getUrl:function(c,sk){return c.kojishiUrl;}},
+  {name:'Indeed',       sub:'求人横断検索',           logo:'🔵',  bg:'linear-gradient(135deg,#1a3a8a,#2060d0)', tc:'#a8cfff', getUrl:function(c,sk){var kw=c.label==='すべて'?'大工 建設':c.label+' 職人';return 'https://jp.indeed.com/jobs?q='+encodeURIComponent(kw)+'&l='+encodeURIComponent('大阪府')+'&sort=date';}},
+  {name:'求人ボックス', sub:'日払い・急募に強い',     logo:'📦',  bg:'linear-gradient(135deg,#802020,#c04020)', tc:'#ffcca0', getUrl:function(c,sk){var kw=c.label==='すべて'?'大工':c.label;return 'https://kyuujinbox.com/jobs/?q='+encodeURIComponent(kw)+'&l='+encodeURIComponent('大阪');}},
+];
+
+// ============================================================
+//  状態
+// ============================================================
+var mode='hiring', curArea=AREAS[0], curCat=CATS[0], curSkill=null;
+var funcTab='jobs', showingFav=false;
+var selExp='', selCerts=[], activeFilters=[];
+var favorites = JSON.parse(localStorage.getItem('osaka_fav')||'[]');
+
+// ============================================================
+//  Gemini API呼び出し
+// ============================================================
+async function callGemini(prompt, useSearch, useUrl){
+  var body={prompt:prompt, model:'gemini-2.5-flash', useSearch:!!useSearch};
+  if(useUrl) body.useUrl=true;
+  var r=await fetch(FB_BASE+'/askClaude',{
+    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+  });
+  if(!r.ok){var e=await r.json().catch(function(){return {};});throw new Error('通信エラー: '+(e.error||r.status));}
+  var d=await r.json();
+  return d.candidates?.[0]?.content?.parts?.[0]?.text||d.text||d.result||'応答なし';
+}
+
+// ============================================================
+//  パーサー（フィルタータグ抽出付き）
+// ============================================================
+function parseJobs(text){
+  var blocks=text.split(/\n(?=###?\s|\d+[\.\)]\s|【|\*\*[^*]+\*\*)/);
+  var jobs=[], seen=new Set();
+  blocks.forEach(function(block){
+    var lines=block.split('\n').filter(function(l){return l.trim().length>2;});
+    if(!lines.length) return;
+    var title=lines[0].replace(/^[#\d\.\)【】*\s]+/,'').replace(/\*+/g,'').trim();
+    if(title.length<3) return;
+    var details=[], source='', phone='', address='', rawText=block;
+    lines.slice(1).forEach(function(line){
+      var c=line.replace(/^\*+|-\s*|•\s*/,'').trim();
+      if(/https?:\/\//.test(c)) source=(c.match(/https?:\/\/[^\s)）]+/)||[''])[0];
+      else if(/0\d{1,4}[-－]\d{1,4}[-－]\d{4}/.test(c)) phone=(c.match(/0\d{1,4}[-－]\d{1,4}[-－]\d{4}/)||[''])[0];
+      else if(c.length>4) details.push(c);
+    });
+    // 住所推定（大阪市〜など）
+    var addrMatch=rawText.match(/大阪[市府]?[\w\s]*[区市町村]/);
+    if(addrMatch) address=addrMatch[0];
+    // タグ判定
+    var tags=[];
+    var raw=rawText.toLowerCase();
+    if(/日払い|日給即払/.test(rawText)) tags.push('daily');
+    if(/週払い|週給/.test(rawText)) tags.push('weekly');
+    if(/未経験(OK|可|歓迎)|経験不問/.test(rawText)) tags.push('newbie');
+    if(/車通勤(OK|可)|マイカー通勤|駐車場/.test(rawText)) tags.push('car');
+    if(/急募|即日|即採用|急着/.test(rawText)) tags.push('urgent');
+    var key=title.slice(0,20);
+    if(!seen.has(key)){seen.add(key);jobs.push({title:title,details:details,source:source,phone:phone,address:address,tags:tags});}
+  });
+  return jobs.slice(0,25);
+}
+
+// ============================================================
+//  フィルター適用
+// ============================================================
+function applyFilters(jobs){
+  if(!activeFilters.length) return jobs;
+  return jobs.filter(function(j){
+    return activeFilters.every(function(f){return j.tags.indexOf(f)>=0;});
+  });
+}
+
+// ============================================================
+//  メイン検索
+// ============================================================
+async function doSearch(){
+  if(document.getElementById('loading-area').style.display==='block') return;
+  setLoadingUI(true);
+  if(showingFav){toggleFavPane();} // お気に入り表示中は閉じる
+  showPane('jobs');
+
+  var isSk=(mode==='seeking');
+  var queries=isSk?curCat.sQ:curCat.hQ;
+  var urls=isSk?curCat.sUrls:curCat.hUrls;
+  var al=curArea.id==='all'?'大阪府全域':curArea.label;
+  var now=new Date(); var ym=now.getFullYear()+'年'+(now.getMonth()+1)+'月';
+
+  // フィルターをプロンプトに反映
+  var filterWords=[];
+  if(activeFilters.indexOf('daily')>=0)   filterWords.push('日払い');
+  if(activeFilters.indexOf('weekly')>=0)  filterWords.push('週払い');
+  if(activeFilters.indexOf('newbie')>=0)  filterWords.push('未経験OK');
+  if(activeFilters.indexOf('car')>=0)     filterWords.push('車通勤OK');
+  if(activeFilters.indexOf('urgent')>=0)  filterWords.push('急募・即採用');
+  var filterNote=filterWords.length?'\n【必須条件】特に以下の条件に合う求人を優先してください: '+filterWords.join('、'):'';
+
+  var qList=queries.map(function(q,i){
+    var q2=q.replace('大阪',al==='大阪府全域'?'大阪':al);
+    return (i+1)+'. '+q2+' '+ym;
+  }).join('\n');
+
+  var urlSection=
+    '【直接クロール対象サイト（必ず以下URLのページを読み込んで求人情報を収集してください）】\n'+
+    urls.map(function(u,i){return (i+1)+'. '+u;}).join('\n')+'\n\n'+
+    '【追加検索サイト（Google検索で以下も探してください）】\n'+
+    'Indeed大阪: https://jp.indeed.com/jobs?q='+encodeURIComponent((curCat.label==='すべて'?'大工 建設':curCat.label)+' 職人')+'&l='+encodeURIComponent(al)+'\n'+
+    '求人ボックス: https://kyuujinbox.com/jobs/?q='+encodeURIComponent(curCat.label==='すべて'?'大工':curCat.label)+'&l='+encodeURIComponent(al)+'\n\n';
+
+  var skillNote=curSkill?'\n\n【求職者スキル・優先条件】\n'+curSkill+'\nこのスキルに合う求人を上位に表示してください。':'';
+
+  var sys=isSk
+    ? '大阪建設業の職人・一人親方向け仕事情報の専門家。指定URLと検索で職人が応募できる仕事・案件を最低15件以上収集。各案件:\n### [会社名または案件タイトル]\n- 仕事内容・職種\n- 日給・単価・月収目安\n- 勤務地（大阪府内の具体的な市区町村）\n- 必要経験・資格（未経験OK・日払い・車通勤OKは必ず明記）\n- 電話番号（あれば）\n- URL\n重複除外。架空情報厳禁。情報が少なくても見つけた案件は全件列挙。'
+    : '大阪建設業求人の専門家。指定URLと検索で求人を最低15件以上収集。各求人:\n### [会社名または求人タイトル]\n- 職種・仕事内容\n- 給与・日給・月給（日払い・週払い・即払いは必ず明記）\n- 勤務地（大阪府内の具体的な市区町村）\n- 応募資格（未経験OK・急募・車通勤OKは必ず明記）\n- 電話番号（あれば）\n- URL\n重複除外。架空情報厳禁。情報が少なくても見つけた求人は全件列挙。';
+
+  var prompt=sys+'\n\n'+urlSection+
+    '以下キーワードでもGoogle検索して追加収集（目標15〜20件）：\n'+qList+filterNote+skillNote;
+
+  var t1=setTimeout(function(){setLoadingMsg('📡 プラスワーク・助太刀を直接クロール中…');},3000);
+  var t2=setTimeout(function(){setLoadingMsg('🔎 Indeed・求人ボックスも検索中…');},7000);
+  var t3=setTimeout(function(){setLoadingMsg('🗂️ 全件まとめています…');},12000);
+
+  try{
+    var text=await callGemini(prompt,true,true);
+    clearTimeout(t1);clearTimeout(t2);clearTimeout(t3);
+    var jobs=parseJobs(text);
+    var filtered=applyFilters(jobs);
+    document.getElementById('search-note').textContent='🌐 Gemini×Google検索×6サイトクロール';
+    document.getElementById('update-time').textContent=new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'})+'更新';
+    if(filtered.length>0) renderJobs(filtered,jobs.length);
+    else if(jobs.length>0){showToast('フィルター条件に合う求人が見つかりませんでした');renderJobs(jobs,jobs.length);}
+    else if(text.trim()){document.getElementById('raw-area').style.display='block';document.getElementById('raw-text').textContent=text;}
+  }catch(err){
+    clearTimeout(t1);clearTimeout(t2);clearTimeout(t3);
+    document.getElementById('error-area').style.display='block';
+    document.getElementById('error-msg').textContent=err.message;
+  }
+  setLoadingUI(false);
+}
+
+// ============================================================
+//  求人カード描画
+// ============================================================
+function renderJobs(jobs,totalCount){
+  var isSk=(mode==='seeking');
+  var colors=isSk
+    ?['#1A9BE8','#1ABA68','#38d9a9','#00cec9','#0984e3','#6c5ce7','#00b894','#fdcb6e','#e17055','#a29bfe','#55efc4','#74b9ff']
+    :['#d45a10','#f07030','#c03080','#8030c0','#1a5a9a','#1a8a50','#d08010','#c03020','#4070c0','#2a8070','#a05010','#604090'];
+  var ac=isSk?'var(--seek)':'var(--hire)';
+  var acHex=isSk?'#2a8a50':'#d45a10';
+
+  var countEl=document.getElementById('job-count');
+  countEl.textContent=jobs.length+(totalCount&&totalCount!==jobs.length?' / '+totalCount+'件中':'')+'件';
+  countEl.style.background=acHex+'18';
+  countEl.style.color=acHex;
+  document.getElementById('job-count-label').textContent=(isSk?'仕事・案件':'求人')+' ／ '+curArea.label+' ／ '+curCat.label;
+
+  var list=document.getElementById('job-list');
+  list.innerHTML='';
+
+  jobs.forEach(function(job,i){
+    var accent=colors[i%12];
+    var isFav=favorites.some(function(f){return f.title===job.title;});
+    var tagHtml='';
+    if(job.tags.indexOf('daily')>=0)   tagHtml+='<span class="job-tag tag-daily">💴 日払い</span>';
+    if(job.tags.indexOf('weekly')>=0)  tagHtml+='<span class="job-tag tag-weekly">📅 週払い</span>';
+    if(job.tags.indexOf('newbie')>=0)  tagHtml+='<span class="job-tag tag-inexperienced">🌱 未経験OK</span>';
+    if(job.tags.indexOf('car')>=0)     tagHtml+='<span class="job-tag tag-car">🚗 車通勤OK</span>';
+    if(job.tags.indexOf('urgent')>=0)  tagHtml+='<span class="job-tag tag-daily">⚡ 急募</span>';
+
+    var detailHtml=job.details.slice(0,3).map(function(d){return '<div class="job-detail">• '+esc(d)+'</div>';}).join('');
+
+    var actHtml='<div class="job-actions">';
+    // お気に入り
+    actHtml+='<button class="job-act-btn fav'+(isFav?' faved':'')+'" onclick="toggleFav(this,'+i+')" data-idx="'+i+'">'+
+      (isFav?'⭐':'☆')+(isFav?' 保存済み':'お気に入り')+'</button>';
+    // 電話（番号があれば）
+    if(job.phone) actHtml+='<a class="job-act-btn call" href="tel:'+job.phone+'">📞 電話</a>';
+    // 地図（住所があれば）
+    if(job.address||curArea.id!=='all'){
+      var mapQ=encodeURIComponent((job.address||curArea.label)+' '+job.title);
+      actHtml+='<a class="job-act-btn map" href="https://maps.google.com/?q='+mapQ+'" target="_blank" rel="noopener">🗺 地図</a>';
+    }
+    // 詳細リンク
+    if(job.source) actHtml+='<a class="job-act-btn detail" href="'+esc(job.source)+'" target="_blank" rel="noopener">🔗 詳細</a>';
+    // 共有
+    actHtml+='<button class="job-act-btn share" onclick="shareJob('+i+')">📤 共有</button>';
+    actHtml+='</div>';
+
+    var card=document.createElement('div');
+    card.className='job-card';
+    card.style.borderLeft='4px solid '+accent;
+    card.style.animationDelay=(Math.min(i,10)*0.04)+'s';
+    card.dataset.idx=i;
+    card.innerHTML=
+      '<div class="job-card-head">'+
+        '<div class="job-title">'+esc(job.title)+'</div>'+
+        '<span class="job-badge" style="background:'+accent+'18;color:'+accent+';">'+(isSk?'募集中':'NEW')+'</span>'+
+      '</div>'+
+      detailHtml+
+      (tagHtml?'<div class="job-tags">'+tagHtml+'</div>':'')+
+      actHtml;
+    list.appendChild(card);
+  });
+
+  // グローバルに保存（お気に入り・共有用）
+  window._currentJobs=jobs;
+  document.getElementById('results-area').style.display='block';
+}
+
+// ============================================================
+//  お気に入り
+// ============================================================
+function toggleFav(btn,idx){
+  var job=(window._currentJobs||[])[idx];
+  if(!job) return;
+  var fi=favorites.findIndex(function(f){return f.title===job.title;});
+  if(fi>=0){
+    favorites.splice(fi,1);
+    btn.className='job-act-btn fav';
+    btn.textContent='☆ お気に入り';
+    showToast('お気に入りを解除しました');
+  } else {
+    favorites.push({title:job.title,details:job.details,source:job.source,phone:job.phone,tags:job.tags,savedAt:Date.now(),mode:mode,cat:curCat.label});
+    btn.className='job-act-btn fav faved';
+    btn.textContent='⭐ 保存済み';
+    showToast('⭐ お気に入りに追加しました');
+  }
+  localStorage.setItem('osaka_fav',JSON.stringify(favorites));
+  updateFavCount();
+}
+
+function updateFavCount(){
+  document.getElementById('fav-count').textContent=favorites.length;
+  var btn=document.getElementById('fav-toggle-btn');
+  btn.className='header-fav-btn'+(favorites.length>0?' active':'');
+}
+
+function toggleFavPane(){
+  showingFav=!showingFav;
+  document.getElementById('fav-pane').style.display=showingFav?'block':'none';
+  document.getElementById('pane-jobs').style.display=showingFav?'none':'block';
+  document.getElementById('pane-salary').style.display='none';
+  document.getElementById('pane-skill').style.display='none';
+  if(showingFav) renderFavPane();
+}
+
+function renderFavPane(){
+  var list=document.getElementById('fav-list');
+  if(!favorites.length){
+    list.innerHTML='<div class="fav-empty"><span class="fav-empty-icon">☆</span>お気に入りはまだありません<br><span style="font-size:11px;color:var(--text3);">求人カードの ☆ をタップして保存できます</span></div>';
+    return;
+  }
+  list.innerHTML='';
+  favorites.forEach(function(job,i){
+    var card=document.createElement('div');
+    card.className='job-card';
+    card.style.borderLeft='4px solid var(--accent)';
+    card.style.animationDelay=(i*0.04)+'s';
+    var detailHtml=job.details.slice(0,2).map(function(d){return '<div class="job-detail">• '+esc(d)+'</div>';}).join('');
+    var saved=new Date(job.savedAt).toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});
+    var actHtml='<div class="job-actions">';
+    if(job.phone) actHtml+='<a class="job-act-btn call" href="tel:'+job.phone+'">📞 電話</a>';
+    if(job.source) actHtml+='<a class="job-act-btn detail" href="'+esc(job.source)+'" target="_blank" rel="noopener">🔗 詳細</a>';
+    actHtml+='<button class="job-act-btn share" onclick="shareJobObj('+i+',true)">📤 共有</button>';
+    actHtml+='<button class="job-act-btn" onclick="removeFav('+i+',this)" style="color:var(--red);">🗑 削除</button>';
+    actHtml+='</div>';
+    card.innerHTML=
+      '<div class="job-card-head">'+
+        '<div class="job-title">'+esc(job.title)+'</div>'+
+        '<span class="job-badge" style="background:#fff0e8;color:var(--accent);">'+esc(job.cat||'')+'</span>'+
+      '</div>'+
+      detailHtml+
+      '<div style="font-size:10px;color:var(--text3);margin-top:5px;">📅 '+saved+'に保存</div>'+
+      actHtml;
+    list.appendChild(card);
+  });
+}
+
+function removeFav(idx,btn){
+  favorites.splice(idx,1);
+  localStorage.setItem('osaka_fav',JSON.stringify(favorites));
+  updateFavCount();
+  renderFavPane();
+  showToast('削除しました');
+}
+
+function clearAllFav(){
+  if(!favorites.length){showToast('お気に入りはありません');return;}
+  if(!confirm('お気に入りを全件削除しますか？')) return;
+  favorites=[];
+  localStorage.setItem('osaka_fav',JSON.stringify(favorites));
+  updateFavCount();
+  renderFavPane();
+  showToast('全件削除しました');
+}
+
+// ============================================================
+//  共有・コピー
+// ============================================================
+function shareJob(idx){
+  shareJobObj(idx,false);
+}
+function shareJobObj(idx,fromFav){
+  var job=fromFav?favorites[idx]:(window._currentJobs||[])[idx];
+  if(!job) return;
+  var text=job.title+'\n'+job.details.slice(0,2).join('\n')+(job.source?'\n'+job.source:'');
+  if(navigator.share){
+    navigator.share({title:'【求人情報】'+job.title,text:text}).catch(function(){});
+  } else {
+    navigator.clipboard.writeText(text).then(function(){
+      showToast('📋 クリップボードにコピーしました');
+    }).catch(function(){
+      showToast('コピーできませんでした');
+    });
+  }
+}
+
+// ============================================================
+//  UI描画
+// ============================================================
+function renderAreaRow(){
+  var isSk=(mode==='seeking');
+  document.getElementById('area-row').innerHTML=AREAS.map(function(a){
+    var act=curArea.id===a.id?(isSk?'active-seek':'active-hire'):'';
+    return '<button class="chip '+act+'" onclick="selectArea(\''+a.id+'\')">'+a.label+'</button>';
+  }).join('');
+}
+
+function renderCatRow(){
+  var isSk=(mode==='seeking');
+  document.getElementById('cat-row').innerHTML=CATS.map(function(c){
+    var act=curCat.id===c.id?(isSk?'active-seek':'active-hire'):'';
+    return '<button class="chip '+act+'" onclick="selectCat(\''+c.id+'\')">'+c.icon+' '+c.label+'</button>';
+  }).join('');
+}
+
+function renderSiteBanners(){
+  var isSk=(mode==='seeking');
+  var row1='', row2='';
+  SITE_LIST.forEach(function(s,i){
+    var url=s.getUrl(curCat,isSk);
+    var badge=i<2?(isSk?'マッチング':'求人検索'):i===4?'日付順':'急募優先';
+    var html='<a class="site-banner" href="'+url+'" target="_blank" rel="noopener" style="background:'+s.bg+';">'+
+      '<div class="banner-row" style="display:flex;align-items:center;gap:7px;margin-bottom:4px;">'+
+        '<span style="font-size:15px;">'+s.logo+'</span>'+
+        '<div><div class="banner-name">'+s.name+'</div><div class="banner-sub">'+s.sub+'</div></div>'+
+      '</div>'+
+      '<div class="banner-foot">'+
+        '<span class="banner-badge">'+badge+'</span>'+
+        '<span class="banner-arrow">→</span>'+
+      '</div>'+
+    '</a>';
+    if(i<3) row1+=html; else row2+=html;
+  });
+  document.getElementById('site-banners-1').innerHTML=row1;
+  document.getElementById('site-banners-2').innerHTML=row2;
+}
+
+function renderFilters(){
+  var isSk=(mode==='seeking');
+  ['daily','weekly','newbie','car','urgent'].forEach(function(f){
+    var el=document.getElementById('fc-'+f);
+    if(!el) return;
+    var on=activeFilters.indexOf(f)>=0;
+    el.className='filter-chip'+(on?(isSk?' on-seek':' on-hire'):'');
+  });
+}
+
+function renderSalary(){
+  var activeLbl=curCat.id==='all'?null:curCat.label;
+  var maxVal=42000;
+  document.getElementById('salary-rows').innerHTML=SAL_ALL.map(function(d){
+    var minP=(d.min/maxVal)*100, maxP=(d.max/maxVal)*100, avgP=(d.avg/maxVal)*100;
+    var dim=activeLbl&&d.label!==activeLbl?' dim':'';
+    return '<div class="salary-row'+dim+'">'+
+      '<div class="salary-label-row">'+
+        '<span class="salary-cat" style="color:'+d.color+'">'+d.label+'</span>'+
+        '<span class="salary-range">¥'+d.min.toLocaleString()+' 〜 <strong style="color:'+d.color+'">¥'+d.avg.toLocaleString()+'</strong> 〜 ¥'+d.max.toLocaleString()+'</span>'+
+      '</div>'+
+      '<div class="salary-bar-bg">'+
+        '<div class="salary-bar-range" style="left:'+minP+'%;width:'+(maxP-minP)+'%;background:'+d.color+'28;"></div>'+
+        '<div class="salary-bar-avg"  style="left:'+(avgP-1.5)+'%;background:'+d.color+';"></div>'+
+      '</div></div>';
+  }).join('');
+}
+
+function renderSkillPanel(){
+  var isSk=(mode==='seeking');
+  var sel=isSk?'sel-seek':'sel-hire';
+  var grad=isSk?'var(--grad-seek)':'var(--grad-hire)';
+  document.getElementById('skill-panel-title').textContent='📝 スキルに合う'+(isSk?'仕事':'求人')+'を探す';
+  document.getElementById('skill-srch-btn').style.background=grad;
+  var exps=['未経験','1〜2年','3〜5年','6〜10年','10年以上'];
+  document.getElementById('exp-row').innerHTML=exps.map(function(v){
+    return '<button class="tag-btn'+(selExp===v?' '+sel:'')+'" onclick="toggleExp(\''+v+'\')">'+v+'</button>';
+  }).join('');
+  var certs=['大工2級','大工1級','建築施工管理技士','玉掛け技能','足場作業主任者','高所作業車','クレーン運転','内装仕上げ施工技能士'];
+  document.getElementById('cert-row').innerHTML=certs.map(function(v){
+    var on=selCerts.indexOf(v)>=0;
+    return '<button class="cert-btn'+(on?' '+sel:'')+'" onclick="toggleCert(\''+v+'\')">'+v+'</button>';
+  }).join('');
+}
+
+function renderLoadingSites(){
+  var sites=['プラスワーク','助太刀','建設ジョブ','工事士.com','Indeed','求人ボックス'];
+  document.getElementById('loading-sites').innerHTML=sites.map(function(s,i){
+    return '<span class="loading-site-tag" style="animation-delay:'+(i*0.15)+'s">'+s+'</span>';
+  }).join('');
+}
+
+function renderAll(){
+  renderAreaRow(); renderCatRow(); renderSiteBanners(); renderFilters();
+  renderSkillPanel(); renderSalary(); updateHeaderAccent(); updateFavCount();
+}
+
+function updateHeaderAccent(){
+  var isSk=(mode==='seeking');
+  var ac=isSk?'#2a8a50':'#d45a10';
+  var grad=isSk?'var(--grad-seek)':'var(--grad-hire)';
+  document.getElementById('hdr-icon').style.background=grad;
+  document.getElementById('hdr-sub').textContent=isSk?'Gemini 2.5 Flash + 6サイト × 職人向けモード':'Gemini 2.5 Flash + 6サイト同時検索';
+  document.getElementById('app-header').style.borderBottomColor=ac;
+  document.getElementById('refresh-btn').className='icon-btn '+(isSk?'seek':'hire');
+  document.getElementById('spinner').style.borderTopColor=ac;
+  var dots=document.getElementById('dots').children;
+  for(var i=0;i<dots.length;i++) dots[i].style.background=ac;
+  document.getElementById('spin-emoji').textContent=isSk?'👷':'🏢';
+  document.getElementById('tab-hire').className='mode-tab'+(mode==='hiring'?' active-hire':'');
+  document.getElementById('tab-seek').className='mode-tab'+(mode==='seeking'?' active-seek':'');
+  var ftabs=['jobs','salary','skill'];
+  ftabs.forEach(function(k){
+    document.getElementById('ftab-'+k).className='func-tab'+(funcTab===k?' '+(isSk?'active-seek':'active-hire'):'');
+  });
+}
+
+// ============================================================
+//  UI制御
+// ============================================================
+function setLoadingUI(on){
+  document.getElementById('loading-area').style.display=on?'block':'none';
+  document.getElementById('error-area').style.display='none';
+  document.getElementById('results-area').style.display='none';
+  document.getElementById('raw-area').style.display='none';
+  document.getElementById('refresh-btn').disabled=on;
+  document.getElementById('refresh-btn').textContent=on?'検索中…':'🔄 更新';
+  if(on){setLoadingMsg('🔍 '+curArea.label+'の'+curCat.label+'を検索中…');renderLoadingSites();}
+}
+function setLoadingMsg(m){document.getElementById('loading-msg').textContent=m;}
+function showPane(name){
+  ['jobs','salary','skill'].forEach(function(n){
+    document.getElementById('pane-'+n).style.display=(n===name)?'block':'none';
+  });
+  document.getElementById('fav-pane').style.display='none';
+  showingFav=false;
+  funcTab=name; updateHeaderAccent();
+}
+function setMode(m){mode=m;renderAll();doSearch();}
+function setFuncTab(name){showPane(name);if(name==='salary') renderSalary();}
+function selectArea(id){curArea=AREAS.find(function(a){return a.id===id;})||AREAS[0];renderAll();doSearch();}
+function selectCat(id){curCat=CATS.find(function(c){return c.id===id;})||CATS[0];renderAll();doSearch();}
+function toggleExp(v){selExp=selExp===v?'':v;renderSkillPanel();}
+function toggleCert(v){var i=selCerts.indexOf(v);if(i>=0)selCerts.splice(i,1);else selCerts.push(v);renderSkillPanel();}
+function toggleFilter(f){
+  var i=activeFilters.indexOf(f);
+  if(i>=0) activeFilters.splice(i,1); else activeFilters.push(f);
+  renderFilters();
+  doSearch();
+}
+function skillSearch(){
+  var pref=document.getElementById('pref-input').value.trim();
+  var parts=[];
+  if(selExp) parts.push('経験年数: '+selExp);
+  if(selCerts.length) parts.push('資格: '+selCerts.join('、'));
+  if(pref) parts.push('希望: '+pref);
+  curSkill=parts.length?parts.join('\n'):null;
+  var isSk=(mode==='seeking');
+  var ac=isSk?'#2a8a50':'#d45a10';
+  var badge=document.getElementById('skill-badge');
+  if(curSkill){badge.textContent='スキル検索中';badge.style.background=ac+'18';badge.style.color=ac;badge.style.display='inline-block';}
+  document.getElementById('reset-btn').style.display=curSkill?'inline':'none';
+  showPane('jobs'); doSearch();
+}
+function resetSkill(){
+  curSkill=null; selExp=''; selCerts=[];
+  document.getElementById('pref-input').value='';
+  document.getElementById('skill-badge').style.display='none';
+  document.getElementById('reset-btn').style.display='none';
+  renderSkillPanel(); doSearch();
+}
+
+// ── Toast ──
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.className='show';
+  setTimeout(function(){t.className='';},2200);
+}
+
+// ── Escape ──
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ============================================================
+//  起動
+// ============================================================
+document.addEventListener('DOMContentLoaded',function(){
+  renderAll();
+  showPane('jobs');
+  updateFavCount();
+  doSearch();
+});
+</script>
+</body>
+</html>
